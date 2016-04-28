@@ -1,0 +1,35 @@
+$grid-gutter-width: 20px;
+
+$screen-xs: 320px;
+$screen-xs-min: $screen-xs;
+$screen-phone: $screen-xs-min;
+
+$screen-sm: 768px;
+$screen-sm-min: $screen-sm;
+$screen-tablet: $screen-sm-min;
+
+$screen-md: 1024px;
+$screen-md-min: $screen-md;
+$screen-desktop: $screen-md-min;
+
+$screen-lg: 1046px;
+$screen-lg-min: $screen-lg;
+$screen-lg-desktop: $screen-lg-min;
+
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-sm-max: ($screen-md-min - 1);
+$screen-md-max: ($screen-lg-min - 1);
+
+$grid-columns: 12;
+
+$grid-float-breakpoint: $screen-sm-min;
+$grid-float-breakpoint-max: ($grid-float-breakpoint - 1);
+
+$container-tablet: ($screen-sm  - $grid-gutter-width);
+$container-sm: $container-tablet;
+$container-desktop: ($screen-md - $grid-gutter-width);
+$container-md: $container-desktop;
+$container-large-desktop: ($screen-lg - $grid-gutter-width);
+$container-lg: $container-large-desktop;
+
+$icon-font-path: "../../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
