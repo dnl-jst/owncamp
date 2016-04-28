@@ -16,3 +16,4 @@
 /web/bundles/
 /.idea/
 /.vagrant/
+/web/bower_components/
