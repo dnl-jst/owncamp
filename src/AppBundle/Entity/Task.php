@@ -56,6 +56,10 @@ class Task
      */
     protected $finished;
 
+    /**
+     * @ORM\OneToMany(targetEntity="File", mappedBy="task", cascade={"remove"})
+     */
+    private $files;
 
     /**
      * Get id
@@ -233,5 +237,46 @@ class Task
     public function getAssignedTo()
     {
         return $this->assignedTo;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->files = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add file
+     *
+     * @param \AppBundle\Entity\File $file
+     *
+     * @return Task
+     */
+    public function addFile(\AppBundle\Entity\File $file)
+    {
+        $this->files[] = $file;
+
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \AppBundle\Entity\File $file
+     */
+    public function removeFile(\AppBundle\Entity\File $file)
+    {
+        $this->files->removeElement($file);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 }
