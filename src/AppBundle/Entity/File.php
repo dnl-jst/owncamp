@@ -46,6 +46,12 @@ class File
     protected $task;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="files")
+     * @ORM\JoinColumn(name="commentId", referencedColumnName="id")
+     */
+    protected $comment;
+
+    /**
      * Get id
      *
      * @return integer
@@ -173,5 +179,29 @@ class File
     public function getTask()
     {
         return $this->task;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return File
+     */
+    public function setComment(\AppBundle\Entity\Comment $comment = null)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return \AppBundle\Entity\Comment
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 }

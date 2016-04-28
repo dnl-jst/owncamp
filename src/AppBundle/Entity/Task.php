@@ -62,6 +62,11 @@ class Task
     private $files;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="task", cascade={"remove"})
+     */
+    private $comments;
+
+    /**
      * Get id
      *
      * @return integer
@@ -278,5 +283,39 @@ class Task
     public function getFiles()
     {
         return $this->files;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return Task
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
