@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Projektübersicht: {{ project.name }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for taskSet in project.taskSets %}
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="well">
+                    <h2>{{ taskSet.name }}</h2>
+                    <ul>
+                        {% for task in taskSet.tasks %}
+                        <li>{{ task.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

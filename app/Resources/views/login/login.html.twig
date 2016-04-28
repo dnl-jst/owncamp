@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row row-login">
+            <div class="col-xs-12">
+                <div class="well">
+                    <h1 class="text-center">Anmelden</h1>
+
+                    {% if error %}
+                        <div class="text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    <form action="{{ path('security_login_check') }}" method="post">
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                                <label for="email">E-Mail</label>
+                                <input type="text" id="email" name="_username" class="form-control" tabindex="1" value="{{ last_username }}" />
+
+                                <label for="password">Passwort</label>
+                                <input type="password" id="password" name="_password" class="form-control" tabindex="2" />
+
+                                <input type="checkbox" id="remember_me" name="_remember_me" tabindex="3" />
+                                <label for="remember_me">angemeldet bleiben?</label>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-default" type="submit" tabindex="4">anmelden</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

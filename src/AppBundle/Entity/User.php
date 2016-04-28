@@ -37,22 +37,17 @@ class User implements UserInterface, \Serializable
     protected $password;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    protected $active;
-
-    /**
      * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $passwordResetHash;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $firstName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $lastName;
 
@@ -107,7 +102,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
         ));
     }
@@ -117,7 +112,7 @@ class User implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
             ) = unserialize($serialized);
     }
@@ -166,30 +161,6 @@ class User implements UserInterface, \Serializable
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     *
-     * @return User
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
     }
 
     /**

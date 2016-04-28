@@ -7939,3 +7939,6 @@ button.close {
 
 .font-1 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+body {
+  padding-top: 60px; }
