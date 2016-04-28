@@ -1,0 +1,23 @@
+{
+  "name": "SiCoPla",
+  "version": "0.0.1",
+  "description": "SiCoPla ============",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dnl-jst/sicopla"
+  },
+  "author": "Daniel Jost <info@daniel-jost.de>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-sass-glob": "0.0.2"
+  }
+}
