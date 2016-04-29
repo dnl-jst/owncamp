@@ -16,7 +16,9 @@
                     <h2>{{ taskSet.name }}</h2>
                     <ul>
                         {% for task in taskSet.tasks %}
-                        <li>{{ task.name }}</li>
+                        <li>
+                            <a href="{{ path('task_index', {'id': task.id}) }}">{{ task.name }}</a> {% if task.comments|length %} {{ task.comments|length }} <i class="fa fa-comment"></i>{% endif %}
+                        </li>
                         {% endfor %}
                     </ul>
                 </div>

@@ -292,4 +292,9 @@ class User implements UserInterface, \Serializable
     {
         return $this->projects;
     }
+
+    public function getGravatarUrl($size = 150)
+    {
+        return 'http://www.gravatar.com/avatar/' . md5($this->getEmail()) . '?s=' . (int)$size;
+    }
 }
