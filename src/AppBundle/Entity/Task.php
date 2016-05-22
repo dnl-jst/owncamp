@@ -63,6 +63,7 @@ class Task
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="task", cascade={"remove"})
+     * @ORM\OrderBy({"created" = "ASC"})
      */
     private $comments;
 

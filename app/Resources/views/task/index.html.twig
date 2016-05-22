@@ -32,6 +32,17 @@
                             </h3>
                             <p>{{ comment.created|date('d.m.Y H:i') }}</p>
                             {{ comment.comment|raw }}
+
+                            <div class="files row">
+                                {% for file in comment.files %}
+                                <div class="file col-xs-6 col-sm-3 col-md-1">
+                                    <a href="{{ path('file', {'id': file.id, 'filename': cleanUrl.clean(file.filename), 'ext': file.valueBlobExt}) }}">
+                                        <span class="file-{{ file.valueBlobExt }}"></span>
+                                        {{ file.filename }}
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
