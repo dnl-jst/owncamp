@@ -16,6 +16,16 @@
                         <h2>Aufgabenbeschreibung:</h2>
                         {{ task.description }}
                     </div>
+                    <div class="files row">
+                        {% for file in task.files %}
+                            <div class="file col-xs-6 col-sm-3 col-md-1">
+                                <a href="{{ path('file', {'id': file.id, 'filename': cleanUrl.clean(file.filename), 'ext': file.valueBlobExt}) }}">
+                                    <span class="file-{{ file.valueBlobExt }}"></span>
+                                    {{ file.filename }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
