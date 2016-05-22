@@ -41,7 +41,7 @@ class Comment
     protected $createdBy;
 
     /**
-     * @ORM\OneToMany(targetEntity="File", mappedBy="task", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="File", mappedBy="comment", cascade={"remove"})
      */
     private $files;
 
