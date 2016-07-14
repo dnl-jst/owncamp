@@ -298,4 +298,19 @@ class User implements UserInterface, \Serializable
     {
         return 'http://www.gravatar.com/avatar/' . md5($this->getEmail()) . '?s=' . (int)$size;
     }
+
+    /**
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        foreach ($this->roles as $userRole) {
+            if ($userRole->getRole() == $role) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

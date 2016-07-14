@@ -5,26 +5,79 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <h1>Projektübersicht: {{ project.name }}</h1>
+                <h1>Project: {{ project.name }}</h1>
             </div>
         </div>
 
         <div class="row">
-            {% for taskSet in project.taskSets %}
-            <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="col-xs-12">
                 <div class="well">
-                    <h2>{{ taskSet.name }}</h2>
-                    <ul>
-                        {% for task in taskSet.tasks %}
-                        <li>
-                            <a href="{{ path('task_index', {'id': task.id}) }}">{{ task.name }}</a> {% if task.comments|length %} {{ task.comments|length }} <i class="fa fa-comment"></i>{% endif %}
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    <a href="{{ path('taskSet_add', {'projectId': project.id}) }}" class="btn btn-default">
+                        + New Taskset
+                    </a>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% if project.taskSets|length %}
+                {% for taskSet in project.taskSets %}
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="well">
+                        <h2>{{ taskSet.name }}</h2>
+                        <ul class="task-set-{{ taskSet.id }}">
+                            {% for task in taskSet.tasks %}
+                            <li>
+                                <a href="{{ path('task_index', {'id': task.id}) }}">{{ task.name }}</a> {% if task.comments|length %} {{ task.comments|length }} <i class="fa fa-comment"></i>{% endif %}
+                            </li>
+                            {% endfor %}
+                            <li>
+                                <form class="add-task-form" data-task-set-id="{{ taskSet.id }}">
+                                    <input type="text" class="task-name" />
+                                    <input type="submit" value="Add task" />
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-xs-12">
+                    <div class="well">
+                        No task sets created yet.
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
     </div>
+
+    <script type="text/javascript">
+        $(function() {
+            $('.add-task-form').submit(function(e) {
+
+                e.preventDefault();
+
+                var that = this;
+                var taskSetId = $(that).data('task-set-id');
+                var taskName = $(that).find('.task-name').val();
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('task_add') }}',
+                    data: {
+                        task_set_id: taskSetId,
+                        task_name: taskName
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result !== false) {
+                            $(that).parent('li').before('<li><a href="/task/' + result.id + '">' + taskName + '</a></li>');
+                            $(that).find('.task-name').val('');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
