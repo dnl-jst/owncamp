@@ -59,6 +59,7 @@ class TaskController extends Controller
         $task->setCreated(new \DateTime());
         $task->setTaskSet($taskSet);
         $task->setCreatedBy($user);
+        $task->setPosition($em->getRepository('AppBundle:Task')->getMaxUnfinishedPosition($taskSet) + 1);
 
         $em->persist($task);
         $em->flush();
@@ -80,13 +81,18 @@ class TaskController extends Controller
         $user = $this->getUser();
 
         /** @var Task $task */
-        $task = $em->getRepository('AppBundle:Task')->findOneById($request->get('id'));
+        $taskRepo = $em->getRepository('AppBundle:Task');
+        $task = $taskRepo->findOneById($request->get('id'));
 
         if (!$task || !$task->getTaskSet()->getProject()->getUsers()->contains($user)) {
             throw $this->createNotFoundException();
         }
 
-        $task->setFinished($request->get('finished', false) ? new \DateTime() : null);
+        $finished = $request->get('finished', 0);
+        $maxPosition = ($finished) ? ($taskRepo->getMaxFinishedPosition($task->getTaskSet()) + 1) : ($taskRepo->getMaxUnfinishedPosition($task->getTaskSet()) + 1);
+
+        $task->setFinished($finished ? new \DateTime() : null);
+        $task->setPosition($maxPosition + 1);
 
         $em->persist($task);
         $em->flush();

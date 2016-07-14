@@ -41,6 +41,7 @@ class TaskSet
 
     /**
      * @ORM\OneToMany(targetEntity="Task", mappedBy="taskSet", cascade={"remove"})
+     * @ORM\OrderBy({"position" = "asc"})
      */
     private $tasks;
 
