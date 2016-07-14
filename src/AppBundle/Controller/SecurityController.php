@@ -20,6 +20,13 @@ class SecurityController extends Controller
 			return $this->redirectToRoute('projects_index');
 		}
 
+        $em = $this->getDoctrine()->getManager();
+        $userCount = $em->getRepository('AppBundle:User')->getCount();
+
+        if ($userCount === 0) {
+            return $this->redirectToRoute('install');
+        }
+
 		$authenticationUtils = $this->get('security.authentication_utils');
 
 		// get the login error if there is one

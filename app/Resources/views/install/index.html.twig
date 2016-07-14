@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="well">
+                    {{ form_start(form) }}
+
+                        {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+
+                        {{ form_row(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_row(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+
+                        <button class="btn btn-default" type="submit">Neuen Account erstellen</button>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
