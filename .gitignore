@@ -18,3 +18,4 @@
 /.vagrant/
 /web/bower_components/
 /node_modules/
+/.phpintel/
