@@ -65,4 +65,32 @@ class TaskController extends Controller
 
         return new JsonResponse(array('id' => $task->getId()));
     }
+
+    /**
+     * @Route("/task/finish", name="task_finish")
+     */
+    public function finishAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$request->get('id')) {
+            return new JsonResponse(false);
+        }
+
+        $user = $this->getUser();
+
+        /** @var Task $task */
+        $task = $em->getRepository('AppBundle:Task')->findOneById($request->get('id'));
+
+        if (!$task || !$task->getTaskSet()->getProject()->getUsers()->contains($user)) {
+            throw $this->createNotFoundException();
+        }
+
+        $task->setFinished(new \DateTime());
+
+        $em->persist($task);
+        $em->flush();
+
+        return new JsonResponse(true);
+    }
 }

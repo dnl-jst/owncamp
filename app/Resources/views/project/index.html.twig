@@ -26,9 +26,11 @@
                     <div class="well">
                         <h2>{{ taskSet.name }}</h2>
                         <ul class="task-set-{{ taskSet.id }}">
-                            {% for task in taskSet.tasks %}
+                            {% for task in taskRepo.getUnfinished(taskSet) %}
                             <li>
-                                <a href="{{ path('task_index', {'id': task.id}) }}">{{ task.name }}</a> {% if task.comments|length %} {{ task.comments|length }} <i class="fa fa-comment"></i>{% endif %}
+                                <input type="checkbox" class="finish-task" data-task-id="{{ task.id }}" />
+                                <a href="{{ path('task_index', {'id': task.id}) }}">{{ task.name }}</a>
+                                {% if task.comments|length %} {{ task.comments|length }} <i class="fa fa-comment"></i>{% endif %}
                             </li>
                             {% endfor %}
                             <li>
@@ -54,6 +56,7 @@
 
     <script type="text/javascript">
         $(function() {
+
             $('.add-task-form').submit(function(e) {
 
                 e.preventDefault();
@@ -72,8 +75,30 @@
                     dataType: 'json',
                     success: function(result) {
                         if (result !== false) {
-                            $(that).parent('li').before('<li><a href="/task/' + result.id + '">' + taskName + '</a></li>');
+                            $(that).parent('li').before('<li><input type="checkbox" class="finish-task" data-task-id="' + result.id + '" /> <a href="/task/' + result.id + '">' + taskName + '</a></li>');
                             $(that).find('.task-name').val('');
+                        }
+                    }
+                });
+            });
+
+            $('body').on('click', '.finish-task', function(e) {
+
+                var that = this;
+                var taskId = $(that).data('task-id');
+
+                $(that).parent('li').css({textDecoration: 'line-through'});
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ path('task_finish') }}',
+                    data: {
+                        id: taskId
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result !== false) {
+                            $(that).parent('li').remove();
                         }
                     }
                 });

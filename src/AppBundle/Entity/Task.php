@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="tasks")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\TaskRepository")
  */
 class Task
 {

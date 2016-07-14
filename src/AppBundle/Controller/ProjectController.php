@@ -30,7 +30,8 @@ class ProjectController extends Controller
 
         return $this->render('project/index.html.twig', [
             'user' => $user,
-            'project' => $project
+            'project' => $project,
+            'taskRepo' => $em->getRepository('AppBundle:Task')
         ]);
     }
 
