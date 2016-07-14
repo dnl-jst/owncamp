@@ -1,14 +1,14 @@
 {
-  "name": "SiCoPla",
+  "name": "owncamp",
   "version": "0.0.1",
-  "description": "SiCoPla ============",
+  "description": "owncamp ============",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dnl-jst/sicopla"
+    "url": "https://github.com/dnl-jst/owncamp"
   },
   "author": "Daniel Jost <info@daniel-jost.de>",
   "license": "MIT",

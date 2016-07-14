@@ -9,9 +9,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "ubuntu", primary: true do |ubuntu|
   	  ubuntu.vm.box = "ubuntu/trusty64"
   	  ubuntu.vm.provision :shell, path: "vagrant/provision.sh"
-  	  ubuntu.vm.hostname = "sicopla.local"
+  	  ubuntu.vm.hostname = "owncamp.local"
   	  ubuntu.vm.network "private_network", ip: "192.168.56.162"
-  	  ubuntu.hostsupdater.aliases = ["sicopla.local"]
+  	  ubuntu.hostsupdater.aliases = ["owncamp.local"]
   	  ubuntu.vm.synced_folder ".", "/vagrant", {:owner => "www-data", :group => "www-data"}
   end
 

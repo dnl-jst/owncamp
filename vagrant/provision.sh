@@ -34,4 +34,4 @@ mv composer.phar /usr/local/bin/composer
 service nginx restart
 service php5-fpm restart
 
-echo "CREATE DATABASE IF NOT EXISTS sicopla;" | mysql -uroot -prootpass
+echo "CREATE DATABASE IF NOT EXISTS owncamp;" | mysql -uroot -prootpass
