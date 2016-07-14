@@ -25,7 +25,7 @@
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <div class="well">
                         <h2><a href="{{ path('taskSet_index', {'id': taskSet.id}) }}">{{ taskSet.name }}</a></h2>
-                        <ul class="task-set-{{ taskSet.id }}">
+                        <ul class="unfinished-tasks-{{ taskSet.id }}">
                             {% for task in taskRepo.getUnfinished(taskSet) %}
                             <li>
                                 <input type="checkbox" class="finish-task" data-task-id="{{ task.id }}" />
@@ -33,13 +33,12 @@
                                 {% if task.comments|length %} {{ task.comments|length }} <i class="fa fa-comment"></i>{% endif %}
                             </li>
                             {% endfor %}
-                            <li>
-                                <form class="add-task-form" data-task-set-id="{{ taskSet.id }}">
-                                    <input type="text" class="task-name" />
-                                    <input type="submit" value="Add task" />
-                                </form>
-                            </li>
                         </ul>
+
+                        <form class="add-task-form" data-task-set-id="{{ taskSet.id }}">
+                            <input type="text" class="task-name" />
+                            <input type="submit" value="Add task" />
+                        </form>
                     </div>
                 </div>
                 {% endfor %}
