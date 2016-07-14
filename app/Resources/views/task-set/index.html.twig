@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>{{ taskSet.name }}</h1>
+                <p>{{ taskSet.project.name }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="well">
+                    <div class="description">
+                        <h2>Task set description:</h2>
+                        <div class="taskset-description">
+                            {{ taskSet.description|default("No task set description.") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="well">
+                    <div class="description">
+                        <h3>Tasks:</h3>
+                        <ul class="unfinished-tasks unfinished-tasks-{{ taskSet.id }}">
+                            {% for task in unfinishedTasks %}
+                                <li>
+                                    <input type="checkbox" class="finish-task" data-task-id="{{ task.id }}" data-task-set-id="{{ taskSet.id }}" />
+                                    <a href="{{ path('task_index', {'id': task.id}) }}">{{ task.name }}</a>
+                                    {% if task.comments|length %} {{ task.comments|length }} <i class="fa fa-comment"></i>{% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <form class="add-task-form" data-task-set-id="{{ taskSet.id }}">
+                            <input type="text" class="task-name" />
+                            <input type="submit" value="Add task" />
+                        </form>
+
+                        <hr>
+
+                        <h3>Finished tasks:</h3>
+                        <ul class="finished-tasks finished-tasks-{{ taskSet.id }}">
+                            {% for task in finishedTasks %}
+                                <li>
+                                    <input type="checkbox" class="finish-task" data-task-id="{{ task.id }}" checked="checked" data-task-set-id="{{ taskSet.id }}" />
+                                    <a href="{{ path('task_index', {'id': task.id}) }}">{{ task.name }}</a>
+                                    {% if task.comments|length %} {{ task.comments|length }} <i class="fa fa-comment"></i>{% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

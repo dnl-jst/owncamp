@@ -19,4 +19,13 @@ class TaskRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getFinished(TaskSet $taskSet)
+    {
+        return $this
+            ->getEntityManager()
+            ->createQuery('SELECT t FROM AppBundle:Task t WHERE t.taskSet = :taskSet AND t.finished IS NOT NULL')
+            ->setParameter('taskSet', $taskSet)
+            ->getResult();
+    }
+
 }

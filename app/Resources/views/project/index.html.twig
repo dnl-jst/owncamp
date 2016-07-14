@@ -24,7 +24,7 @@
                 {% for taskSet in project.taskSets %}
                 <div class="col-xs-12 col-sm-6 col-md-4">
                     <div class="well">
-                        <h2>{{ taskSet.name }}</h2>
+                        <h2><a href="{{ path('taskSet_index', {'id': taskSet.id}) }}">{{ taskSet.name }}</a></h2>
                         <ul class="task-set-{{ taskSet.id }}">
                             {% for task in taskRepo.getUnfinished(taskSet) %}
                             <li>
@@ -53,56 +53,4 @@
         </div>
 
     </div>
-
-    <script type="text/javascript">
-        $(function() {
-
-            $('.add-task-form').submit(function(e) {
-
-                e.preventDefault();
-
-                var that = this;
-                var taskSetId = $(that).data('task-set-id');
-                var taskName = $(that).find('.task-name').val();
-
-                $.ajax({
-                    type: 'post',
-                    url: '{{ path('task_add') }}',
-                    data: {
-                        task_set_id: taskSetId,
-                        task_name: taskName
-                    },
-                    dataType: 'json',
-                    success: function(result) {
-                        if (result !== false) {
-                            $(that).parent('li').before('<li><input type="checkbox" class="finish-task" data-task-id="' + result.id + '" /> <a href="/task/' + result.id + '">' + taskName + '</a></li>');
-                            $(that).find('.task-name').val('');
-                        }
-                    }
-                });
-            });
-
-            $('body').on('click', '.finish-task', function(e) {
-
-                var that = this;
-                var taskId = $(that).data('task-id');
-
-                $(that).parent('li').css({textDecoration: 'line-through'});
-
-                $.ajax({
-                    type: 'post',
-                    url: '{{ path('task_finish') }}',
-                    data: {
-                        id: taskId
-                    },
-                    dataType: 'json',
-                    success: function(result) {
-                        if (result !== false) {
-                            $(that).parent('li').remove();
-                        }
-                    }
-                });
-            });
-        });
-    </script>
 {% endblock %}

@@ -22,6 +22,7 @@ class TaskSetController extends Controller
 
         /** @var TaskSet $taskSet */
         $taskSet = $em->getRepository('AppBundle:TaskSet')->findOneById($id);
+        $taskRepo = $em->getRepository('AppBundle:Task');
 
         $user = $this->getUser();
 
@@ -32,7 +33,9 @@ class TaskSetController extends Controller
         return $this->render('task-set/index.html.twig', [
             'user' => $user,
             'project' => $taskSet->getProject(),
-            'taskSet' => $taskSet
+            'taskSet' => $taskSet,
+            'unfinishedTasks' => $taskRepo->getUnfinished($taskSet),
+            'finishedTasks' => $taskRepo->getFinished($taskSet)
         ]);
     }
 

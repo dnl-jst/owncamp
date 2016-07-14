@@ -86,7 +86,7 @@ class TaskController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $task->setFinished(new \DateTime());
+        $task->setFinished($request->get('finished', false) ? new \DateTime() : null);
 
         $em->persist($task);
         $em->flush();
