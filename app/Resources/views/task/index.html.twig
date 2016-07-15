@@ -14,9 +14,37 @@
             <div class="col-xs-12">
                 <div class="well">
                     <div class="description">
-                        <h2>Task description:</h2>
+                        <h3>Task description:</h3>
                         <div class="task-description">
-                            {{ task.description|default("No task description.") }}
+                            <div class="output">
+                                {{ task.description|default("No task description.")|raw }}
+                            </div>
+                            <div class="edit hidden">
+                                <textarea class="input-task-description form-control tinymce">{{ task.description|default("")|raw }}</textarea>
+                            </div>
+                            <button class="btn btn-sm btn-default edit-task-description" data-task-id="{{ task.id }}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </div>
+                        <div class="task-assigned-to">
+                            <h3>Assigned to:</h3>
+                            <div class="output">
+                                {% if task.assignedTo %}
+                                    {{ task.assignedTo.firstName }}
+                                {% else %}
+                                    unassigned
+                                {% endif %}
+                            </div>
+                            <div class="edit hidden">
+                                <select class="input-task-assigned-to form-control">
+                                    {% for user in task.taskSet.project.users %}
+                                    <option value="{{ user.id }}"{% if task.assignedTo and task.assignedTo.id == user.id %} selected="selected"{% endif %}>{{ user.firstName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button class="btn btn-sm btn-default edit-task-assigned-to" data-task-id="{{ task.id }}">
+                                <i class="fa fa-edit"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="files row">

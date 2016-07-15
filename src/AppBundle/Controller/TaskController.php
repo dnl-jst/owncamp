@@ -68,6 +68,56 @@ class TaskController extends Controller
     }
 
     /**
+     * @Route("/task/edit", name="task_edit")
+     */
+    public function editAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$request->get('id')) {
+            return new JsonResponse(false);
+        }
+
+        $user = $this->getUser();
+
+        /** @var Task $task */
+        $taskRepo = $em->getRepository('AppBundle:Task');
+        $task = $taskRepo->findOneById($request->get('id'));
+
+        if (!$task || !$task->getTaskSet()->getProject()->getUsers()->contains($user)) {
+            return new JsonResponse(false);
+        }
+
+        $keys = $request->get('keys', array());
+
+        foreach ($keys as $key) {
+
+            $setter = 'set' . ucfirst($key);
+            $value = $request->get($key);
+
+            if ($key === 'assignedTo') {
+
+                $user = $em->getRepository('AppBundle:User')->findOneById($value);
+
+                if (!$user || !$task->getTaskSet()->getProject()->getUsers()->contains($user)) {
+                    return new JsonResponse(false);
+                }
+
+                $value = $user;
+            }
+
+            if (method_exists($task, $setter)) {
+                $task->$setter($value);
+            }
+        }
+
+        $em->persist($task);
+        $em->flush();
+
+        return new JsonResponse(true);
+    }
+
+    /**
      * @Route("/task/finish", name="task_finish")
      */
     public function finishAction(Request $request)
