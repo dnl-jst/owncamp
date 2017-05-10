@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+
+  web:
+    image: webdevops/php-apache:debian-8-php7
+    volumes:
+      - .:/app
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    environment:
+      - WEB_DOCUMENT_ROOT=/app/web
+
+  mysql:
+    image: mysql:5.7
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+    volumes:
+      - ./data:/var/lib/mysql
+      - .:/opt/app
+      - ./_sql:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpass
+      - MYSQL_DATABASE=owncamp
