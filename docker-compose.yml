@@ -23,6 +23,10 @@ services:
       - ./data:/var/lib/mysql
       - .:/opt/app
       - ./_sql:/docker-entrypoint-initdb.d
+    ports:
+      - "1206:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=rootpass
       - MYSQL_DATABASE=owncamp
+      - MYSQL_USER=owncamp
+      - MYSQL_PASSWORD=owncamp
